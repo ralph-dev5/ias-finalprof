@@ -2,8 +2,6 @@
 
 @section('content')
 <div class="vault-page">
-
-    {{-- Grid background --}}
     <div class="vault-grid" aria-hidden="true"></div>
     <div class="vault-glow" aria-hidden="true"></div>
 
@@ -15,7 +13,7 @@
 
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    <span class="badge-text">AES-256 · SHA-256 · Zero-trust access</span>
+                    <span class="badge-text">AES-256 · SHA-256 · Zero-trust</span>
                 </div>
 
                 <h1 class="hero-title">
@@ -24,8 +22,8 @@
                 </h1>
 
                 <p class="hero-body">
-                    Every file locked with AES-256 encryption before it touches disk. Integrity verified
-                    with SHA-256 on every download. Only the owner ever gets in.
+                    Every file locked with AES-256 encryption before it touches disk.
+                    Integrity verified with SHA-256 on every download.
                 </p>
 
                 <div class="hero-actions">
@@ -131,30 +129,27 @@
 </div>
 
 <style>
-/* ─── Fonts ─── */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ─── Tokens ─── */
 :root {
-    --bg:        #0a0b0d;
-    --surface:   #10121a;
-    --surface-2: #161924;
-    --border:    rgba(255,255,255,0.07);
-    --border-hi: rgba(255,255,255,0.13);
-    --amber:     #f59e0b;
-    --amber-dim: rgba(245,158,11,0.12);
-    --amber-glow:rgba(245,158,11,0.06);
-    --text:      #e8eaf0;
-    --muted:     #6b7280;
-    --mono:      'JetBrains Mono', monospace;
-    --sans:      'Syne', sans-serif;
+    --bg:         #0a0b0d;
+    --surface:    #10121a;
+    --surface-2:  #161924;
+    --border:     rgba(255,255,255,0.07);
+    --border-hi:  rgba(255,255,255,0.13);
+    --amber:      #f59e0b;
+    --amber-dim:  rgba(245,158,11,0.12);
+    --amber-glow: rgba(245,158,11,0.06);
+    --text:       #e8eaf0;
+    --muted:      #6b7280;
+    --mono:       'JetBrains Mono', monospace;
+    --sans:       'Syne', sans-serif;
 }
 
-/* ─── Reset scope ─── */
 .vault-page * { box-sizing: border-box; margin: 0; padding: 0; }
 .vault-page { font-family: var(--sans); color: var(--text); position: relative; min-height: 100vh; }
 
-/* ─── Background ─── */
+/* ── Background ── */
 .vault-grid {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background-image:
@@ -164,56 +159,59 @@
 }
 .vault-glow {
     position: fixed; top: -20vh; left: 50%; transform: translateX(-50%);
-    width: 70vw; height: 60vh; z-index: 0; pointer-events: none;
+    width: 90vw; height: 60vh; z-index: 0; pointer-events: none;
     background: radial-gradient(ellipse at center, rgba(245,158,11,0.07) 0%, transparent 70%);
 }
+
+/* ── Shell ── */
 .vault-shell {
     position: relative; z-index: 1;
     max-width: 1200px; margin: 0 auto;
-    padding: 3rem 1.5rem 4rem;
+    padding: 2rem 1rem 3rem;
 }
 
-/* ─── Hero layout ─── */
+/* ── Hero layout: single column on mobile, two-col on desktop ── */
 .hero-section {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
-    align-items: start;
     animation: fadeUp 0.7s ease both;
 }
 @media (min-width: 900px) {
-    .hero-section { grid-template-columns: 1.2fr 0.8fr; gap: 3rem; }
+    .vault-shell { padding: 3rem 1.5rem 4rem; }
+    .hero-section {
+        flex-direction: row;
+        align-items: start;
+        gap: 3rem;
+    }
+    .hero-main  { flex: 1.2; }
+    .hero-panel { flex: 0.8; }
 }
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Hero main ─── */
+/* ── Badge ── */
 .hero-badge {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.3rem 0.8rem; border-radius: 99px;
     background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.25);
-    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.04em;
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.04em;
     color: var(--amber);
 }
 .badge-dot {
     width: 6px; height: 6px; border-radius: 50%;
-    background: var(--amber);
-    box-shadow: 0 0 6px var(--amber);
+    background: var(--amber); box-shadow: 0 0 6px var(--amber);
     animation: pulse 2s ease-in-out infinite;
 }
-@keyframes pulse {
-    0%,100% { opacity: 1; }
-    50%      { opacity: 0.4; }
-}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ── Title ── */
 .hero-title {
-    margin-top: 1.5rem;
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    color: #fff;
+    margin-top: 1.25rem;
+    font-size: clamp(2rem, 8vw, 4rem);
+    font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: #fff;
 }
 .hero-accent {
     font-style: normal;
@@ -222,43 +220,35 @@
     background-clip: text;
 }
 .hero-body {
-    margin-top: 1.25rem;
-    font-size: 1.0rem; line-height: 1.75;
+    margin-top: 1rem;
+    font-size: clamp(0.875rem, 3vw, 1rem); line-height: 1.75;
     color: var(--muted); max-width: 520px;
-    font-family: 'Syne', sans-serif; font-weight: 400;
 }
 
-/* ─── Buttons ─── */
-.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+/* ── Buttons ── */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
 .btn {
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.7rem 1.4rem; border-radius: 0.5rem;
     font-family: var(--sans); font-size: 0.875rem; font-weight: 600;
     text-decoration: none; transition: all 0.15s ease; cursor: pointer;
-    border: 1px solid transparent;
+    border: 1px solid transparent; white-space: nowrap;
 }
-.btn-primary {
-    background: var(--amber); color: #0a0a0a;
-    border-color: var(--amber);
-}
-.btn-primary:hover {
-    background: #fbbf24; border-color: #fbbf24;
-    box-shadow: 0 0 20px rgba(245,158,11,0.35);
-}
-.btn-ghost {
-    background: transparent; color: var(--text);
-    border-color: var(--border-hi);
-}
+.btn-primary { background: var(--amber); color: #0a0a0a; border-color: var(--amber); }
+.btn-primary:hover { background: #fbbf24; box-shadow: 0 0 20px rgba(245,158,11,0.35); }
+.btn-ghost  { background: transparent; color: var(--text); border-color: var(--border-hi); }
 .btn-ghost:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
 .btn-icon { width: 16px; height: 16px; flex-shrink: 0; }
 .btn-icon-right { margin-left: 0.1rem; }
 
-/* ─── Feature grid ─── */
+/* ── Feature pills ── */
 .feature-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 0.75rem; margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem; margin-top: 2rem;
 }
-@media (max-width: 520px) { .feature-grid { grid-template-columns: 1fr; } }
+@media (min-width: 480px) { .feature-grid { grid-template-columns: 1fr 1fr; } }
+
 .feature-pill {
     display: flex; align-items: flex-start; gap: 0.6rem;
     padding: 0.75rem 1rem;
@@ -268,23 +258,17 @@
     transition: border-color 0.15s;
 }
 .feature-pill:hover { border-color: var(--border-hi); }
-.feature-icon {
-    width: 15px; height: 15px; flex-shrink: 0;
-    color: var(--amber); margin-top: 1px;
-}
+.feature-icon { width: 15px; height: 15px; flex-shrink: 0; color: var(--amber); margin-top: 1px; }
 
-/* ─── Side panel ─── */
+/* ── Side panel ── */
 .hero-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 1.25rem;
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 1.25rem; overflow: hidden;
     animation: fadeUp 0.7s 0.15s ease both;
 }
 .panel-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0.9rem 1.25rem;
-    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border);
     background: var(--surface-2);
 }
 .panel-status { display: flex; align-items: center; gap: 0.5rem; }
@@ -293,39 +277,28 @@
     background: #22c55e; box-shadow: 0 0 8px #22c55e;
     animation: pulse 2s ease-in-out infinite;
 }
-.status-label {
-    font-family: var(--mono); font-size: 0.65rem;
-    letter-spacing: 0.1em; color: #22c55e;
-}
-.panel-mono { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
+.status-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: #22c55e; }
+.panel-mono   { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
 
-/* ─── Diagram ─── */
-.panel-diagram {
-    padding: 1.75rem 1.25rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-}
-.diagram-row {
-    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-}
+/* ── Diagram ── */
+.panel-diagram { padding: 1.5rem 1.25rem 1.25rem; border-bottom: 1px solid var(--border); }
+.diagram-row { display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
 .diagram-row-mid { padding: 0.3rem 0; justify-content: flex-start; padding-left: calc(50% - 1px); }
-.diagram-connector-v {
-    width: 2px; height: 1.2rem;
-    background: linear-gradient(to bottom, var(--border-hi), transparent);
-}
+.diagram-connector-v { width: 2px; height: 1.2rem; background: linear-gradient(to bottom, var(--border-hi), transparent); }
 .diagram-node {
     display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
-    padding: 0.7rem 0.9rem;
+    padding: 0.65rem 0.75rem;
     background: var(--surface-2); border: 1px solid var(--border);
-    border-radius: 0.75rem; min-width: 80px;
-    font-size: 0.72rem; color: var(--muted); font-family: var(--mono);
-    transition: border-color 0.15s, color 0.15s;
+    border-radius: 0.75rem; min-width: 72px;
+    font-size: 0.7rem; color: var(--muted); font-family: var(--mono);
+    transition: border-color 0.15s;
 }
 .diagram-node svg { width: 18px; height: 18px; }
 .node-encrypt { border-color: rgba(245,158,11,0.3); color: var(--amber); }
 .node-hash    { border-color: rgba(245,158,11,0.2); color: #fcd34d; }
 .diagram-arrow { font-family: var(--mono); color: var(--muted); font-size: 1rem; }
 
-/* ─── Info list ─── */
+/* ── Info list ── */
 .panel-info-list { padding: 0.75rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .panel-info-item {
     display: flex; justify-content: space-between; align-items: center;
